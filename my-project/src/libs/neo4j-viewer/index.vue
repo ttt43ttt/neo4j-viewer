@@ -18,10 +18,22 @@ export default {
     }
   },
   methods: {
-    updateStyle() {},
-    getNeighbours() {},
-    assignVisElement() {},
-    setGraph() {}
+    updateStyle() {
+      console.log(`updateStyle`)
+      console.log(arguments)
+    },
+    getNeighbours() {
+      console.log(`getNeighbours`)
+      console.log(arguments)
+    },
+    assignVisElement() {
+      console.log(`assignVisElement`)
+      console.log(arguments)
+    },
+    setGraph() {
+      console.log(`setGraph`)
+      console.log(arguments)
+    }
   },
   async mounted() {
     const response = await getData()
@@ -30,6 +42,9 @@ export default {
     this.relationships = relationships
   },
   render() {
+    if (this.nodes.length === 0) {
+      return null
+    }
     return (
       <ExplorerComponent
         maxNeighbours={this.maxNeighbours}

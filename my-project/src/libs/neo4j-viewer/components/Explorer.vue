@@ -46,13 +46,35 @@ export default {
     StyledFullSizeContainer
   },
   data() {
+    const graphStyle = neoGraphStyle()
+    this.defaultStyle = graphStyle.toSheet()
+    let relationships = this.relationships
+    let nodes = deduplicateNodes(this.nodes)
+    let selectedItem = ''
+
+    if (nodes.length > parseInt(this.initialNodeDisplay)) {
+      nodes = nodes.slice(0, this.initialNodeDisplay)
+      relationships = this.relationships.filter(item => {
+        return nodes.filter(node => node.id === item.startNodeId) > 0
+      })
+      selectedItem = {
+        type: 'status-item',
+        item: `Not all return nodes are being displayed due to Initial Node Display setting. Only ${this.initialNodeDisplay} of ${nodes.length} nodes are being displayed`
+      }
+    }
+
+    if (this.graphStyleData) {
+      const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
+      graphStyle.loadRules(rebasedStyle)
+    }
+
     return {
       stats: { labels: {}, relTypes: {} },
-      graphStyle: {},
+      graphStyle: graphStyle,
       styleVersion: 0,
-      nodesData: [],
-      relationshipsData: [],
-      selectedItem: '',
+      nodesData: nodes,
+      relationshipsData: relationships,
+      selectedItem: selectedItem,
       labels: {},
       relTypes: {}
     }
@@ -130,36 +152,6 @@ export default {
       this.inspectorContracted = contracted
       this.forcePaddingBottom = inspectorHeight
     }
-  },
-  created() {
-    const graphStyle = neoGraphStyle()
-    this.defaultStyle = graphStyle.toSheet()
-    let relationships = this.relationships
-    let nodes = deduplicateNodes(this.nodes)
-    let selectedItem = ''
-
-    if (nodes.length > parseInt(this.initialNodeDisplay)) {
-      nodes = nodes.slice(0, this.initialNodeDisplay)
-      relationships = this.relationships.filter(item => {
-        return nodes.filter(node => node.id === item.startNodeId) > 0
-      })
-      selectedItem = {
-        type: 'status-item',
-        item: `Not all return nodes are being displayed due to Initial Node Display setting. Only ${this.initialNodeDisplay} of ${nodes.length} nodes are being displayed`
-      }
-    }
-
-    if (this.graphStyleData) {
-      const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
-      graphStyle.loadRules(rebasedStyle)
-    }
-
-    // set state
-    const data = this.$data
-    data.graphStyle = graphStyle
-    data.nodes = nodes
-    data.relationships = relationships
-    data.selectedItem = selectedItem
   },
   watch: {
     graphStyleData: function (graphStyleData, prevGraphStyleData) {
