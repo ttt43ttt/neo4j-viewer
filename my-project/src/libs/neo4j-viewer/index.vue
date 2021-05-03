@@ -3,7 +3,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'neo4j-viewer'
+}
 </script>
 
 <style scoped>
