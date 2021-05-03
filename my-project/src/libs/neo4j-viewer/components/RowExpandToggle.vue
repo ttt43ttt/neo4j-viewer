@@ -5,6 +5,11 @@ const getHeightFromElem = rowElem => rowElem && (rowElem ? rowElem.clientHeight 
 
 export default {
   name: 'row-expand-toggle-component',
+  methods: {
+    updateDimensions() {
+      this.rowHeight = getHeightFromElem(this.rowElem)
+    }
+  },
   mounted() {
     this.updateDimensions()
     window.addEventListener('resize', this.updateDimensions)
@@ -34,4 +39,3 @@ export default {
   }
 }
 </script>
- 

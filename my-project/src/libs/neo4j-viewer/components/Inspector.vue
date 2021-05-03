@@ -17,7 +17,7 @@ import {
   StyledInlineList
 } from './styled'
 import { GrassEditor } from './GrassEditor'
-import { RowExpandToggleComponent } from './RowExpandToggle'
+import RowExpandToggleComponent from './RowExpandToggle'
 import ClickableUrls from '../browser/ClickableUrls'
 import numberToUSLocale from '../utils/number-to-US-locale'
 
@@ -25,11 +25,11 @@ const mapItemProperties = itemProperties =>
   itemProperties
     .sort(({ key: keyA }, { key: keyB }) => (keyA < keyB ? -1 : keyA === keyB ? 0 : 1))
     .map((prop, i) => (
-      <StyledInspectorFooterRowListPair className="pair" key={'prop' + i}>
-        <StyledInspectorFooterRowListKey className="key">
+      <StyledInspectorFooterRowListPair class="pair" key={'prop' + i}>
+        <StyledInspectorFooterRowListKey class="key">
           {prop.key + ': '}
         </StyledInspectorFooterRowListKey>
-        <StyledInspectorFooterRowListValue className="value">
+        <StyledInspectorFooterRowListValue class="value">
           <ClickableUrls text={optionalToString(prop.value)} />
         </StyledInspectorFooterRowListValue>
       </StyledInspectorFooterRowListPair>
@@ -46,7 +46,7 @@ const mapLabels = (graphStyle, itemLabels) => {
       <StyledLabelToken
         key={'label' + i}
         style={style}
-        className={'token' + ' ' + 'token-label'}
+        class={'token' + ' ' + 'token-label'}
       >
         {label}
       </StyledLabelToken>
@@ -56,6 +56,21 @@ const mapLabels = (graphStyle, itemLabels) => {
 
 export default {
   name: 'inspector-component',
+  components: {
+    StyledInspectorFooterStatusMessage,
+    StyledTokenContextMenuKey,
+    StyledTokenRelationshipType,
+    StyledLabelToken,
+    StyledStatusBar,
+    StyledStatus,
+    StyledInspectorFooter,
+    StyledInspectorFooterRow,
+    StyledInspectorFooterRowListPair,
+    StyledInspectorFooterRowListKey,
+    StyledInspectorFooterRowListValue,
+    StyledInlineList,
+    RowExpandToggleComponent
+  },
   data() {
     return { contracted: true, graphStyle: this.graphStyle }
   },

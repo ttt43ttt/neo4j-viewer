@@ -3,7 +3,7 @@ import IconContainer from './IconContainer'
 export const ZoomInIcon = {
   name: 'zoom-in-icon',
   render() {
-    const { inactive, regulateSize } = this.$props
+    const { inactive, regulateSize } = this.$attrs
     return (
       <IconContainer
         activeStyle={inactive}
@@ -18,7 +18,7 @@ export const ZoomInIcon = {
 export const ZoomOutIcon = {
   name: 'zoom-out-icon',
   render() {
-    const { inactive, regulateSize } = this.$props
+    const { inactive, regulateSize } = this.$attrs
     return (
       <IconContainer
         activeStyle={inactive}

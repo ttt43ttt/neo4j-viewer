@@ -1,6 +1,32 @@
 <script>
+import {
+  legendRowHeight,
+  StyledLegendRow,
+  StyledTokenRelationshipType,
+  StyledLegendInlineListItem,
+  StyledLegend,
+  StyledLegendContents,
+  StyledLabelToken,
+  StyledTokenCount,
+  StyledLegendInlineList
+} from './styled'
+import RowExpandToggleComponent from './RowExpandToggle'
+import numberToUSLocale from '../utils/number-to-US-locale'
+
 export default {
   name: 'legend-component',
+  props: ['stats'],
+  components: {
+    StyledLegendRow,
+    StyledTokenRelationshipType,
+    StyledLegendInlineListItem,
+    StyledLegend,
+    StyledLegendContents,
+    StyledLabelToken,
+    StyledTokenCount,
+    StyledLegendInlineList,
+    RowExpandToggleComponent
+  },
   data() {
     return { typeRowContracted: true, labelRowContracted: true }
   },

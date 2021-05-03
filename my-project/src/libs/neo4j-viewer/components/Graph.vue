@@ -9,6 +9,22 @@ import graphView from '../lib/visualization/components/graphView'
 
 export default {
   name: 'graph-component',
+  props: [
+    'fullscreen',
+    'frameHeight',
+    'relationships',
+    'nodes',
+    'getNodeNeighbours',
+    'onItemMouseOver',
+    'onItemSelect',
+    'graphStyle',
+    'styleVersion',
+    'onGraphModelChange',
+    'assignVisElement',
+    'getAutoCompleteCallback',
+    'setGraph'
+  ],
+  components: { StyledSvgWrapper },
   methods: {
     graphInit(el) {
       this.svgElement = el
