@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import styled from 'styled-components'
+import styled from 'vue-styled-components'
 
 export const legendRowHeight = 32
 export const inspectorFooterContractedHeight = 22

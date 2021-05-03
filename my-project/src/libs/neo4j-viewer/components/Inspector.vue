@@ -1,5 +1,4 @@
 <script>
-// export component
 export default {
   name: 'inspector-component',
   data() {

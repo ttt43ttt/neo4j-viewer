@@ -1,6 +1,6 @@
 <script>
 import deepmerge from 'deepmerge'
-import { deepEquals } from 'services/utils'
+import { deepEquals } from '../services/utils'
 import { GraphComponent } from './Graph'
 import neoGraphStyle from '../graphStyle'
 import { InspectorComponent } from './Inspector'

@@ -1,5 +1,4 @@
 <script>
-// export component
 export default {
   name: 'legend-component',
   data() {

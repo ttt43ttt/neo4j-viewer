@@ -1,10 +1,15 @@
 <template>
-  <div>test</div>
+  <div>
+    <ExplorerComponent />
+  </div>
 </template>
 
 <script>
+import ExplorerComponent from './components/Explorer'
+
 export default {
-  name: 'neo4j-viewer'
+  name: 'neo4j-viewer',
+  components: { ExplorerComponent }
 }
 </script>
 
