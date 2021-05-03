@@ -24,6 +24,21 @@ const deduplicateNodes = nodes => {
 
 export default {
   name: 'explorer-component',
+  props: [
+    'maxNeighbours',
+    'hasTruncatedFields',
+    'initialNodeDisplay',
+    'graphStyleData',
+    'updateStyle',
+    'getNeighbours',
+    'nodes',
+    'relationships',
+    'fullscreen',
+    'frameHeight',
+    'assignVisElement',
+    'getAutoCompleteCallback',
+    'setGraph'
+  ],
   components: {
     GraphComponent,
     InspectorComponent,
@@ -35,8 +50,8 @@ export default {
       stats: { labels: {}, relTypes: {} },
       graphStyle: {},
       styleVersion: 0,
-      nodes: [],
-      relationships: [],
+      nodesData: [],
+      relationshipsData: [],
       selectedItem: '',
       labels: {},
       relTypes: {}
@@ -208,8 +223,8 @@ export default {
         <graph-component
           fullscreen={this.fullscreen}
           frameHeight={this.frameHeight}
-          relationships={this.relationships}
-          nodes={this.nodes}
+          relationships={this.relationshipsData}
+          nodes={this.nodesData}
           getNodeNeighbours={this.getNodeNeighbours.bind(this)}
           handleItemMouseOver={this.handleItemMouseOver.bind(this)}
           handleItemSelect={this.handleItemSelect.bind(this)}
