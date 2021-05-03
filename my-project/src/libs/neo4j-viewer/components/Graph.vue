@@ -1,4 +1,12 @@
 <script>
+import { createGraph, mapRelationships, getGraphStats } from '../mapper'
+import { GraphEventHandler } from '../GraphEventHandler'
+import '../lib/visualization/index'
+import { dim } from '../constants'
+import { StyledZoomHolder, StyledSvgWrapper, StyledZoomButton } from './styled'
+import { ZoomInIcon, ZoomOutIcon } from 'browser-components/icons/Icons'
+import graphView from '../visualization/components/graphView'
+
 export default {
   name: 'graph-component',
   methods: {
