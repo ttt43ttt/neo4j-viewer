@@ -77,17 +77,17 @@ export default {
         }
       )
     },
-    handle_onItemMouseOver(item) {
+    handleItemMouseOver(item) {
       this.hoveredItem = item
     },
-    handle_onItemSelect(item) {
+    handleItemSelect(item) {
       this.selectedItem = item
     },
-    handle_onGraphModelChange(stats) {
+    handleGraphModelChange(stats) {
       this.stats = stats
       this.updateStyle(this.graphStyle.toSheet())
     },
-    handle_onSelectedLabel(label, propertyKeys) {
+    handleSelectedLabel(label, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -99,7 +99,7 @@ export default {
         }
       }
     },
-    handle_onSelectedRelType(relType, propertyKeys) {
+    handleSelectedRelType(relType, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -111,7 +111,7 @@ export default {
         }
       }
     },
-    handle_onInspectorExpandToggled(contracted, inspectorHeight) {
+    handleInspectorExpandToggled(contracted, inspectorHeight) {
       this.inspectorContracted = contracted
       this.forcePaddingBottom = inspectorHeight
     }
@@ -179,8 +179,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={neoGraphStyle()}
-          handle_onSelectedLabel={this.handle_onSelectedLabel.bind(this)}
-          handle_onSelectedRelType={this.handle_onSelectedRelType.bind(this)}
+          handleSelectedLabel={this.handleSelectedLabel.bind(this)}
+          handleSelectedRelType={this.handleSelectedRelType.bind(this)}
         />
       )
     } else {
@@ -188,8 +188,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={this.graphStyle}
-          handle_onSelectedLabel={this.handle_onSelectedLabel.bind(this)}
-          handle_onSelectedRelType={this.handle_onSelectedRelType.bind(this)}
+          handleSelectedLabel={this.handleSelectedLabel.bind(this)}
+          handleSelectedRelType={this.handleSelectedRelType.bind(this)}
         />
       )
     }
@@ -211,11 +211,11 @@ export default {
           relationships={this.relationships}
           nodes={this.nodes}
           getNodeNeighbours={this.getNodeNeighbours.bind(this)}
-          handle_onItemMouseOver={this.handle_onItemMouseOver.bind(this)}
-          handle_onItemSelect={this.handle_onItemSelect.bind(this)}
+          handleItemMouseOver={this.handleItemMouseOver.bind(this)}
+          handleItemSelect={this.handleItemSelect.bind(this)}
           graphStyle={this.graphStyle}
           styleVersion={this.styleVersion} // cheap way for child to check style updates
-          handle_onGraphModelChange={this.handle_onGraphModelChange.bind(this)}
+          handleGraphModelChange={this.handleGraphModelChange.bind(this)}
           assignVisElement={this.assignVisElement}
           getAutoCompleteCallback={this.getAutoCompleteCallback}
           setGraph={this.setGraph}
@@ -226,7 +226,7 @@ export default {
           hoveredItem={this.hoveredItem}
           selectedItem={this.selectedItem}
           graphStyle={this.graphStyle}
-          handle_onExpandToggled={this.handle_onInspectorExpandToggled.bind(this)}
+          handleExpandToggled={this.handleInspectorExpandToggled.bind(this)}
         />
       </styled-full-size-container>
     )

@@ -49,7 +49,7 @@ export default {
       }
     ) {
       return styleProps.map((styleProp, i) => {
-        const handle_onClick = () => {
+        const handleClick = () => {
           this.updateStyle(selector, styleProp)
         }
 
@@ -61,7 +61,7 @@ export default {
             <StyledCircleSelector
               class={active ? 'active' : ''}
               style={style}
-              handle_onClick={handle_onClick}
+              handleClick={handleClick}
             >
               {text}
             </StyledCircleSelector>
@@ -116,7 +116,7 @@ export default {
     },
     widthPicker(selector, styleForItem) {
       const widthSelectors = this.graphStyle.defaultArrayWidths().map((widthValue, i) => {
-        const handle_onClick = () => {
+        const handleClick = () => {
           this.updateStyle(selector, widthValue)
         }
 
@@ -129,7 +129,7 @@ export default {
             <StyledPickerSelector
               class={active ? 'active' : ''}
               style={style}
-              handle_onClick={handle_onClick}
+              handleClick={handleClick}
             />
           </StyledPickerListItem>
         )
@@ -167,7 +167,7 @@ export default {
     },
     captionPicker(selector, styleForItem, propertyKeys, showTypeSelector = false) {
       const captionSelector = (displayCaption, captionToSave) => {
-        const handle_onClick = () => {
+        const handleClick = () => {
           this.updateStyle(selector, {
             caption: captionToSave
           })
@@ -176,7 +176,7 @@ export default {
         const active = styleForItem.props.caption === captionToSave
         return (
           <StyledPickerListItem key={toKeyString('caption' + displayCaption)}>
-            <StyledCaptionSelector class={active ? 'active' : ''} handle_onClick={handle_onClick}>
+            <StyledCaptionSelector class={active ? 'active' : ''} handleClick={handleClick}>
               {displayCaption}
             </StyledCaptionSelector>
           </StyledPickerListItem>
