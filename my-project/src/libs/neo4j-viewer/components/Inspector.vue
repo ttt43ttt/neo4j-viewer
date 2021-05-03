@@ -1,4 +1,59 @@
 <script>
+import { deepEquals, optionalToString } from '../services/utils'
+import SVGInline from '../SVGInline'
+import {
+  inspectorFooterContractedHeight,
+  StyledInspectorFooterStatusMessage,
+  StyledTokenContextMenuKey,
+  StyledTokenRelationshipType,
+  StyledLabelToken,
+  StyledStatusBar,
+  StyledStatus,
+  StyledInspectorFooter,
+  StyledInspectorFooterRow,
+  StyledInspectorFooterRowListPair,
+  StyledInspectorFooterRowListKey,
+  StyledInspectorFooterRowListValue,
+  StyledInlineList
+} from './styled'
+import { GrassEditor } from './GrassEditor'
+import { RowExpandToggleComponent } from './RowExpandToggle'
+import ClickableUrls from '../browser/ClickableUrls'
+import numberToUSLocale from '../utils/number-to-US-locale'
+
+const mapItemProperties = itemProperties =>
+  itemProperties
+    .sort(({ key: keyA }, { key: keyB }) => (keyA < keyB ? -1 : keyA === keyB ? 0 : 1))
+    .map((prop, i) => (
+      <StyledInspectorFooterRowListPair className="pair" key={'prop' + i}>
+        <StyledInspectorFooterRowListKey className="key">
+          {prop.key + ': '}
+        </StyledInspectorFooterRowListKey>
+        <StyledInspectorFooterRowListValue className="value">
+          <ClickableUrls text={optionalToString(prop.value)} />
+        </StyledInspectorFooterRowListValue>
+      </StyledInspectorFooterRowListPair>
+    ))
+
+const mapLabels = (graphStyle, itemLabels) => {
+  return itemLabels.map((label, i) => {
+    const graphStyleForLabel = graphStyle.forNode({ labels: [label] })
+    const style = {
+      backgroundColor: graphStyleForLabel.get('color'),
+      color: graphStyleForLabel.get('text-color-internal')
+    }
+    return (
+      <StyledLabelToken
+        key={'label' + i}
+        style={style}
+        className={'token' + ' ' + 'token-label'}
+      >
+        {label}
+      </StyledLabelToken>
+    )
+  })
+}
+
 export default {
   name: 'inspector-component',
   data() {
@@ -88,9 +143,9 @@ export default {
             <styled-inspector-footer-row-list-pair class="pair" key="pair">
               <styled-inspector-footer-row-list-value class="value">
                 {this.hasTruncatedFields && (
-                  <styled-truncated-message>
-                    <icon name="warning sign" /> Record fields have been truncated.&nbsp;
-                  </styled-truncated-message>
+                  <span style="color: orange">
+                    Warning: Record fields have been truncated.&nbsp;
+                  </span>
                 )}
                 {description}
               </styled-inspector-footer-row-list-value>
