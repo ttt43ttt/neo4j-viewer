@@ -1,10 +1,10 @@
 <script>
 import deepmerge from 'deepmerge'
 import { deepEquals } from '../services/utils'
-import { GraphComponent } from './Graph'
+import GraphComponent from './Graph'
 import neoGraphStyle from '../graphStyle'
-import { InspectorComponent } from './Inspector'
-import { LegendComponent } from './Legend'
+import InspectorComponent from './Inspector'
+import LegendComponent from './Legend'
 import { StyledFullSizeContainer } from './styled'
 
 const deduplicateNodes = nodes => {
