@@ -61,8 +61,8 @@ export default {
           labels: [legendItemKey]
         })
 
-        const onClick = () => {
-          this.onSelectedLabel(
+        const handle_onClick = () => {
+          this.handle_onSelectedLabel(
             legendItemKey,
             Object.keys(labels[legendItemKey].properties)
           )
@@ -76,7 +76,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-labels">
             <styled-legend-contents class="contents">
               <styled-label-token
-                onClick={onClick}
+                handle_onClick={handle_onClick}
                 style={style}
                 class="token token-label"
               >
@@ -96,7 +96,7 @@ export default {
               contracted={this.labelRowContracted}
               rowElem={this.labelRowELem}
               containerHeight={legendRowHeight}
-              onClick={() => {
+              handle_onClick={() => {
                 this.setState({
                   labelRowContracted: !this.labelRowContracted
                 })
@@ -118,8 +118,8 @@ export default {
           type: legendItemKey
         })
 
-        const onClick = () => {
-          this.onSelectedRelType(
+        const handle_onClick = () => {
+          this.handle_onSelectedRelType(
             legendItemKey,
             Object.keys(legendItems[legendItemKey].properties)
           )
@@ -133,7 +133,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-reltypes">
             <styled-legend-contents class="contents">
               <styled-token-relationship-type
-                onClick={onClick}
+                handle_onClick={handle_onClick}
                 style={style}
                 class="token token-relationship-type"
               >
@@ -153,7 +153,7 @@ export default {
               contracted={this.typeRowContracted}
               rowElem={this.typeRowElem}
               containerHeight={legendRowHeight}
-              onClick={() => {
+              handle_onClick={() => {
                 this.setState({
                   typeRowContracted: !this.typeRowContracted
                 })

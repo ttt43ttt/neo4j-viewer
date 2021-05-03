@@ -77,17 +77,17 @@ export default {
         }
       )
     },
-    onItemMouseOver(item) {
+    handle_onItemMouseOver(item) {
       this.hoveredItem = item
     },
-    onItemSelect(item) {
+    handle_onItemSelect(item) {
       this.selectedItem = item
     },
-    onGraphModelChange(stats) {
+    handle_onGraphModelChange(stats) {
       this.stats = stats
       this.updateStyle(this.graphStyle.toSheet())
     },
-    onSelectedLabel(label, propertyKeys) {
+    handle_onSelectedLabel(label, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -99,7 +99,7 @@ export default {
         }
       }
     },
-    onSelectedRelType(relType, propertyKeys) {
+    handle_onSelectedRelType(relType, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -111,7 +111,7 @@ export default {
         }
       }
     },
-    onInspectorExpandToggled(contracted, inspectorHeight) {
+    handle_onInspectorExpandToggled(contracted, inspectorHeight) {
       this.inspectorContracted = contracted
       this.forcePaddingBottom = inspectorHeight
     }
@@ -179,8 +179,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={neoGraphStyle()}
-          onSelectedLabel={this.onSelectedLabel.bind(this)}
-          onSelectedRelType={this.onSelectedRelType.bind(this)}
+          handle_onSelectedLabel={this.handle_onSelectedLabel.bind(this)}
+          handle_onSelectedRelType={this.handle_onSelectedRelType.bind(this)}
         />
       )
     } else {
@@ -188,8 +188,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={this.graphStyle}
-          onSelectedLabel={this.onSelectedLabel.bind(this)}
-          onSelectedRelType={this.onSelectedRelType.bind(this)}
+          handle_onSelectedLabel={this.handle_onSelectedLabel.bind(this)}
+          handle_onSelectedRelType={this.handle_onSelectedRelType.bind(this)}
         />
       )
     }
@@ -211,11 +211,11 @@ export default {
           relationships={this.relationships}
           nodes={this.nodes}
           getNodeNeighbours={this.getNodeNeighbours.bind(this)}
-          onItemMouseOver={this.onItemMouseOver.bind(this)}
-          onItemSelect={this.onItemSelect.bind(this)}
+          handle_onItemMouseOver={this.handle_onItemMouseOver.bind(this)}
+          handle_onItemSelect={this.handle_onItemSelect.bind(this)}
           graphStyle={this.graphStyle}
           styleVersion={this.styleVersion} // cheap way for child to check style updates
-          onGraphModelChange={this.onGraphModelChange.bind(this)}
+          handle_onGraphModelChange={this.handle_onGraphModelChange.bind(this)}
           assignVisElement={this.assignVisElement}
           getAutoCompleteCallback={this.getAutoCompleteCallback}
           setGraph={this.setGraph}
@@ -226,7 +226,7 @@ export default {
           hoveredItem={this.hoveredItem}
           selectedItem={this.selectedItem}
           graphStyle={this.graphStyle}
-          onExpandToggled={this.onInspectorExpandToggled.bind(this)}
+          handle_onExpandToggled={this.handle_onInspectorExpandToggled.bind(this)}
         />
       </styled-full-size-container>
     )

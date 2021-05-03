@@ -84,8 +84,8 @@ export default {
       this.contracted = !this.contracted
       this.$nextTick(() => {
         const inspectorHeight = this.footerRowElem.clientHeight
-        this.onExpandToggled &&
-          this.onExpandToggled(this.contracted, this.contracted ? 0 : inspectorHeight)
+        this.handle_onExpandToggled &&
+          this.handle_onExpandToggled(this.contracted, this.contracted ? 0 : inspectorHeight)
       })
     }
   },
@@ -96,7 +96,7 @@ export default {
     selectedItem: function (selectedItem, prevSelectedItem) {
       if (!deepEquals(selectedItem, prevSelectedItem)) {
         this.contracted = true
-        this.onExpandToggled && this.onExpandToggled(true, 0)
+        this.handle_onExpandToggled && this.handle_onExpandToggled(true, 0)
       }
     }
   },
@@ -228,7 +228,7 @@ export default {
                   contracted={this.contracted}
                   rowElem={this.footerRowElem}
                   containerHeight={inspectorFooterContractedHeight}
-                  onClick={this.toggleExpand.bind(this)}
+                  handle_onClick={this.toggleExpand.bind(this)}
                 />
               )}
               {inspectorContent}

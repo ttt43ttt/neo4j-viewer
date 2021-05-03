@@ -15,11 +15,11 @@ export default {
     'relationships',
     'nodes',
     'getNodeNeighbours',
-    'onItemMouseOver',
-    'onItemSelect',
+    'handle_onItemMouseOver',
+    'handle_onItemSelect',
     'graphStyle',
     'styleVersion',
-    'onGraphModelChange',
+    'handle_onGraphModelChange',
     'assignVisElement',
     'getAutoCompleteCallback',
     'setGraph'
@@ -67,12 +67,12 @@ export default {
           this.graph,
           this.graphView,
           this.getNodeNeighbours,
-          this.onItemMouseOver,
-          this.onItemSelect,
-          this.onGraphModelChange
+          this.handle_onItemMouseOver,
+          this.handle_onItemSelect,
+          this.handle_onGraphModelChange
         )
         this.graphEH.bindEventHandlers()
-        this.onGraphModelChange(getGraphStats(this.graph))
+        this.handle_onGraphModelChange(getGraphStats(this.graph))
         this.graphView.resize()
         this.graphView.update()
       }
@@ -82,13 +82,13 @@ export default {
         <StyledZoomHolder>
           <StyledZoomButton
             class={this.zoomInLimitReached ? 'faded zoom-in' : 'zoom-in'}
-            onClick={this.zoomInClicked.bind(this)}
+            handle_onClick={this.zoomInClicked.bind(this)}
           >
             <ZoomInIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>
           <StyledZoomButton
             class={this.zoomOutLimitReached ? 'faded zoom-out' : 'zoom-out'}
-            onClick={this.zoomOutClicked.bind(this)}
+            handle_onClick={this.zoomOutClicked.bind(this)}
           >
             <ZoomOutIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>

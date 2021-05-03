@@ -27,7 +27,7 @@ export default {
   render() {
     if (this.containerHeight * 1.1 < this.rowHeight) {
       return (
-        <styled-row-toggle onClick={this.onClick}>
+        <styled-row-toggle handle_onClick={this.handle_onClick}>
           <styled-caret
             class={this.contracted ? 'fa fa-caret-left' : 'fa fa-caret-down'}
           />
