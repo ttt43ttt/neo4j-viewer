@@ -16,7 +16,7 @@ import {
   StyledInspectorFooterRowListValue,
   StyledInlineList
 } from './styled'
-import { GrassEditor } from './GrassEditor'
+import GrassEditor from './GrassEditor'
 import RowExpandToggleComponent from './RowExpandToggle'
 import ClickableUrls from '../browser/ClickableUrls'
 import numberToUSLocale from '../utils/number-to-US-locale'
@@ -69,7 +69,8 @@ export default {
     StyledInspectorFooterRowListKey,
     StyledInspectorFooterRowListValue,
     StyledInlineList,
-    RowExpandToggleComponent
+    RowExpandToggleComponent,
+    GrassEditor
   },
   data() {
     return { contracted: true, graphStyle: this.graphStyle }

@@ -176,7 +176,10 @@ export default {
         const active = styleForItem.props.caption === captionToSave
         return (
           <StyledPickerListItem key={toKeyString('caption' + displayCaption)}>
-            <StyledCaptionSelector class={active ? 'active' : ''} handleClick={handleClick}>
+            <StyledCaptionSelector
+              class={active ? 'active' : ''}
+              handleClick={handleClick}
+            >
               {displayCaption}
             </StyledCaptionSelector>
           </StyledPickerListItem>
@@ -234,9 +237,7 @@ export default {
       } else if (this.selectedRelType) {
         const relTypeSelector =
           this.selectedRelType.relType !== '*'
-            ? {
-                type: this.selectedRelType.relType
-              }
+            ? { type: this.selectedRelType.relType }
             : {}
         const styleForRelType = this.graphStyle.forRelationship(relTypeSelector)
         const inlineStyle = {
@@ -288,9 +289,11 @@ export default {
       this.widths.push(`${5 + 3 * index}px`)
     }
   },
-  updated() {
-    if (this.graphStyleData && prevProps.graphStyleData !== this.graphStyleData) {
-      this.graphStyle.loadRules(this.graphStyleData)
+  watch: {
+    graphStyleData: function (graphStyleData, prevGraphStyleData) {
+      if (graphStyleData && prevGraphStyleData !== graphStyleData) {
+        this.graphStyle.loadRules(graphStyleData)
+      }
     }
   },
   render() {

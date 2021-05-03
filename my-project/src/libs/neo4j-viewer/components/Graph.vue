@@ -77,6 +77,16 @@ export default {
         this.graphView.update()
       }
     },
+    addInternalRelationships(internalRelationships) {
+      if (this.graph) {
+        this.graph.addInternalRelationships(
+          mapRelationships(internalRelationships, this.graph)
+        )
+        this.onGraphModelChange(getGraphStats(this.graph))
+        this.graphView.update()
+        this.graphEH.onItemMouseOut()
+      }
+    },
     zoomButtons() {
       return (
         <StyledZoomHolder>

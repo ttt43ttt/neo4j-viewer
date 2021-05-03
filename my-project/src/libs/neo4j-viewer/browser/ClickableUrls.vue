@@ -5,11 +5,11 @@ const URL_REGEX = /(?:https?|s?ftp|bolt):\/\/(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?
 export default {
   name: 'clickable-urls',
   render() {
-    const { text, WrappingTag = 'span' } = this.$props
+    const { text, WrappingTag = 'span' } = this.$attrs
     const definedText = text || ''
     const urls = definedText.match(URL_REGEX) || []
     return (
-      <wrapping-tag>
+      <WrappingTag>
         {definedText.split(URL_REGEX).map((text, index) => {
           /* since we never move these components this key should be fine */
           return (
@@ -23,7 +23,7 @@ export default {
             </React.Fragment>
           )
         })}
-      </wrapping-tag>
+      </WrappingTag>
     )
   }
 }

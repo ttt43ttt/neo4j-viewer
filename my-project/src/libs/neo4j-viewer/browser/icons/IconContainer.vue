@@ -1,5 +1,5 @@
 <script>
-import styled, { CSSProperties, FlattenSimpleInterpolation } from 'vue-styled-components'
+import styled from 'vue-styled-components'
 import SVGInline from '../../SVGInline'
 
 const StyledIconWrapper = ({ activeStyle, inactiveStyle, isOpen, children, ...rest }) => {
@@ -21,7 +21,7 @@ const StyledText = styled.div`
 
 export default {
   name: 'icon-container',
-  components: { StyledIconWrapper },
+  components: { StyledIconWrapper, StyledText },
   render() {
     const { text, regulateSize, icon, width, title, ...rest } = this.$attrs
     const regulateSizeStyle = regulateSize ? { fontSize: regulateSize + 'em' } : undefined

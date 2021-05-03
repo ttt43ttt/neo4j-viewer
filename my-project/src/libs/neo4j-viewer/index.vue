@@ -1,5 +1,6 @@
 <script>
 import ExplorerComponent from './components/Explorer'
+import { getData } from '@/api/kg-browser'
 
 export default {
   name: 'neo4j-viewer',
@@ -7,9 +8,9 @@ export default {
   data() {
     return {
       maxNeighbours: 100,
+      initialNodeDisplay: 300,
       hasTruncatedFields: false,
-      initialNodeDisplay: 100,
-      graphStyleData: [],
+      graphStyleData: {},
       nodes: [],
       relationships: [],
       fullscreen: false,
@@ -21,6 +22,12 @@ export default {
     getNeighbours() {},
     assignVisElement() {},
     setGraph() {}
+  },
+  async mounted() {
+    const response = await getData()
+    const { nodes, relationships } = response.results[0].data[0].graph
+    this.nodes = nodes
+    this.relationships = relationships
   },
   render() {
     return (

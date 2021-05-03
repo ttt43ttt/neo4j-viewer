@@ -5,6 +5,10 @@ const getHeightFromElem = rowElem => rowElem && (rowElem ? rowElem.clientHeight 
 
 export default {
   name: 'row-expand-toggle-component',
+  components: {
+    StyledRowToggle,
+    StyledCaret
+  },
   methods: {
     updateDimensions() {
       this.rowHeight = getHeightFromElem(this.rowElem)
