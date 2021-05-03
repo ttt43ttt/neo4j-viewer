@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { optionalToString } from 'services/utils'
+import { optionalToString } from './services/utils'
 import Graph from './lib/visualization/components/graph'
 import Node from './lib/visualization/components/node'
 import Relationship from './lib/visualization/components/relationship'
