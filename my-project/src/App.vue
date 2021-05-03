@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <Browser/>
+    <Browser />
+    <HelloReact />
   </div>
 </template>
 
 <script>
 import Browser from './components/kg-browser'
+import HelloReact from './components/HelloReact'
 
 export default {
   name: 'App',
   components: {
-    Browser
+    Browser,
+    HelloReact
   }
 }
 </script>
