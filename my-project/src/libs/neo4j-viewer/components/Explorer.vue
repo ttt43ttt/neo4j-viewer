@@ -33,11 +33,11 @@ export default {
   data() {
     return {
       stats: { labels: {}, relTypes: {} },
-      graphStyle: graphStyle,
+      graphStyle: {},
       styleVersion: 0,
-      nodes: nodes,
-      relationships: relationships,
-      selectedItem: selectedItem,
+      nodes: [],
+      relationships: [],
+      selectedItem: '',
       labels: {},
       relTypes: {}
     }
@@ -138,24 +138,33 @@ export default {
       const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
       graphStyle.loadRules(rebasedStyle)
     }
+
+    // set state
+    const data = this.data
+    data.graphStyle = graphStyle
+    data.nodes = nodes
+    data.relationships = relationships
+    data.selectedItem = selectedItem
   },
-  updated() {
-    if (!deepEquals(prevProps.graphStyleData, this.graphStyleData)) {
-      if (this.graphStyleData) {
-        const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
-        this.graphStyle.loadRules(rebasedStyle)
-        this.graphStyle = this.graphStyle
-        this.styleVersion = this.styleVersion + 1
-      } else {
-        this.graphStyle.resetToDefault()
-        this.graphStyle = this.graphStyle
-        this.freezeLegend = true
-        this.$nextTick(() => {
-          this.setState({
-            freezeLegend: false
+  watch: {
+    graphStyleData: function (graphStyleData, prevGraphStyleData) {
+      if (!deepEquals(graphStyleData, prevGraphStyleData)) {
+        if (this.graphStyleData) {
+          const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
+          this.graphStyle.loadRules(rebasedStyle)
+          this.graphStyle = this.graphStyle
+          this.styleVersion = this.styleVersion + 1
+        } else {
+          this.graphStyle.resetToDefault()
+          this.graphStyle = this.graphStyle
+          this.freezeLegend = true
+          this.$nextTick(() => {
+            this.setState({
+              freezeLegend: false
+            })
+            this.updateStyle(this.graphStyle.toSheet())
           })
-          this.updateStyle(this.graphStyle.toSheet())
-        })
+        }
       }
     }
   },
