@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <Browser/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Browser from './components/kg-browser'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Browser
   }
 }
 </script>
