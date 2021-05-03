@@ -77,10 +77,12 @@ export default {
   mounted() {
     this.setFooterRowELem.bind(this)(this.$refs.vueref1)
   },
-  updated() {
-    if (!deepEquals(this.selectedItem, prevProps.selectedItem)) {
-      this.contracted = true
-      this.onExpandToggled && this.onExpandToggled(true, 0)
+  watch: {
+    selectedItem: function (selectedItem, prevSelectedItem) {
+      if (!deepEquals(selectedItem, prevSelectedItem)) {
+        this.contracted = true
+        this.onExpandToggled && this.onExpandToggled(true, 0)
+      }
     }
   },
   render() {

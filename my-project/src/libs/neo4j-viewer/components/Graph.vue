@@ -92,15 +92,22 @@ export default {
   },
   updated() {
     this.graphInit.bind(this)(this.$refs.vueref0)
-    if (prevProps.styleVersion !== this.styleVersion) {
-      this.graphView.update()
-    }
-
-    if (
-      this.fullscreen !== prevProps.fullscreen ||
-      this.frameHeight !== prevProps.frameHeight
-    ) {
-      this.graphView.resize()
+  },
+  watch: {
+    styleVersion: function (styleVersion, prevStyleVersion) {
+      if (prevStyleVersion !== styleVersion) {
+        this.graphView.update()
+      }
+    },
+    fullscreen: function (fullscreen, prevFullscreen) {
+      if (fullscreen !== prevFullscreen) {
+        this.graphView.resize()
+      }
+    },
+    frameHeight: function (frameHeight, prevFrameHeight) {
+      if (frameHeight !== prevFrameHeight) {
+        this.graphView.resize()
+      }
     }
   },
   render() {
