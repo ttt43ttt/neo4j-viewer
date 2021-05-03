@@ -140,7 +140,7 @@ export default {
     }
 
     // set state
-    const data = this.data
+    const data = this.$data
     data.graphStyle = graphStyle
     data.nodes = nodes
     data.relationships = relationships
