@@ -96,11 +96,7 @@ export default {
               contracted={this.labelRowContracted}
               rowElem={this.labelRowELem}
               containerHeight={legendRowHeight}
-              handleClick={() => {
-                this.setState({
-                  labelRowContracted: !this.labelRowContracted
-                })
-              }}
+              handleClick={() => (this.labelRowContracted = !this.labelRowContracted)}
             />
             {labelList}
           </styled-legend-inline-list>
@@ -153,11 +149,7 @@ export default {
               contracted={this.typeRowContracted}
               rowElem={this.typeRowElem}
               containerHeight={legendRowHeight}
-              handleClick={() => {
-                this.setState({
-                  typeRowContracted: !this.typeRowContracted
-                })
-              }}
+              handleClick={() => (this.typeRowContracted = !this.typeRowContracted)}
             />
             {relTypeList}
           </styled-legend-inline-list>

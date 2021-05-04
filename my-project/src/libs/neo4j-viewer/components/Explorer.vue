@@ -166,9 +166,7 @@ export default {
           this.graphStyle = this.graphStyle
           this.freezeLegend = true
           this.$nextTick(() => {
-            this.setState({
-              freezeLegend: false
-            })
+            this.freezeLegend = false
             this.updateStyle(this.graphStyle.toSheet())
           })
         }
