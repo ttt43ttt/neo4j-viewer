@@ -347,6 +347,12 @@
                     "startNodeId": "8",
                     "endNodeId": "25",
                     "properties": {}
+                }, {
+                    "id": "999",
+                    "type": "TEST",
+                    "startNodeId": "25",
+                    "endNodeId": "8",
+                    "properties": {}
                 }]
             }
         }]
