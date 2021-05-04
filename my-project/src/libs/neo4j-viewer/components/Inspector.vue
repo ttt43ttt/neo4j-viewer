@@ -18,7 +18,7 @@ import {
 } from './styled'
 import GrassEditor from './GrassEditor'
 import RowExpandToggleComponent from './RowExpandToggle'
-import ClickableUrls from '../browser/ClickableUrls'
+import ClickableUrls from '../ClickableUrls'
 import numberToUSLocale from '../utils/number-to-US-locale'
 
 const mapItemProperties = itemProperties =>

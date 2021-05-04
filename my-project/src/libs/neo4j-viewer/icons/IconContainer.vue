@@ -1,6 +1,6 @@
 <script>
 import styled from 'vue-styled-components'
-import SVGInline from '../../SVGInline'
+import SVGInline from '../SVGInline'
 
 const StyledIconWrapper = ({ activeStyle, inactiveStyle, isOpen, children, ...rest }) => {
   const I = styled.i`
