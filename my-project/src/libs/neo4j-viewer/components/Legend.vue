@@ -15,7 +15,7 @@ import numberToUSLocale from '../utils/number-to-US-locale'
 
 export default {
   name: 'legend-component',
-  props: ['stats'],
+  props: ['stats', 'graphStyle', 'handleSelectedLabel', 'handleSelectedRelType'],
   components: {
     StyledLegendRow,
     StyledTokenRelationshipType,
