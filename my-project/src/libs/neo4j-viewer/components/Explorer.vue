@@ -1,10 +1,10 @@
 <script>
 import deepmerge from 'deepmerge'
-import { deepEquals } from 'services/utils'
-import { GraphComponent } from './Graph'
+import { deepEquals } from '../services/utils'
+import GraphComponent from './Graph'
 import neoGraphStyle from '../graphStyle'
-import { InspectorComponent } from './Inspector'
-import { LegendComponent } from './Legend'
+import InspectorComponent from './Inspector'
+import LegendComponent from './Legend'
 import { StyledFullSizeContainer } from './styled'
 
 const deduplicateNodes = nodes => {
@@ -24,6 +24,21 @@ const deduplicateNodes = nodes => {
 
 export default {
   name: 'explorer-component',
+  props: [
+    'maxNeighbours',
+    'hasTruncatedFields',
+    'initialNodeDisplay',
+    'graphStyleData',
+    'updateStyle',
+    'getNeighbours',
+    'nodes',
+    'relationships',
+    'fullscreen',
+    'frameHeight',
+    'assignVisElement',
+    'getAutoCompleteCallback',
+    'setGraph'
+  ],
   components: {
     GraphComponent,
     InspectorComponent,
@@ -31,13 +46,35 @@ export default {
     StyledFullSizeContainer
   },
   data() {
+    const graphStyle = neoGraphStyle()
+    this.defaultStyle = graphStyle.toSheet()
+    let relationships = this.relationships
+    let nodes = deduplicateNodes(this.nodes)
+    let selectedItem = ''
+
+    if (nodes.length > parseInt(this.initialNodeDisplay)) {
+      nodes = nodes.slice(0, this.initialNodeDisplay)
+      relationships = this.relationships.filter(item => {
+        return nodes.filter(node => node.id === item.startNodeId) > 0
+      })
+      selectedItem = {
+        type: 'status-item',
+        item: `Not all return nodes are being displayed due to Initial Node Display setting. Only ${this.initialNodeDisplay} of ${nodes.length} nodes are being displayed`
+      }
+    }
+
+    if (this.graphStyleData) {
+      const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
+      graphStyle.loadRules(rebasedStyle)
+    }
+
     return {
       stats: { labels: {}, relTypes: {} },
-      graphStyle: {},
+      graphStyle: graphStyle,
       styleVersion: 0,
-      nodes: [],
-      relationships: [],
-      selectedItem: '',
+      nodesData: nodes,
+      relationshipsData: relationships,
+      selectedItem: selectedItem,
       labels: {},
       relTypes: {}
     }
@@ -77,17 +114,17 @@ export default {
         }
       )
     },
-    onItemMouseOver(item) {
+    handleItemMouseOver(item) {
       this.hoveredItem = item
     },
-    onItemSelect(item) {
+    handleItemSelect(item) {
       this.selectedItem = item
     },
-    onGraphModelChange(stats) {
+    handleGraphModelChange(stats) {
       this.stats = stats
       this.updateStyle(this.graphStyle.toSheet())
     },
-    onSelectedLabel(label, propertyKeys) {
+    handleSelectedLabel(label, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -99,7 +136,7 @@ export default {
         }
       }
     },
-    onSelectedRelType(relType, propertyKeys) {
+    handleSelectedRelType(relType, propertyKeys) {
       this.selectedItem = {
         type: 'legend-item',
         item: {
@@ -111,40 +148,10 @@ export default {
         }
       }
     },
-    onInspectorExpandToggled(contracted, inspectorHeight) {
+    handleInspectorExpandToggled(contracted, inspectorHeight) {
       this.inspectorContracted = contracted
       this.forcePaddingBottom = inspectorHeight
     }
-  },
-  created() {
-    const graphStyle = neoGraphStyle()
-    this.defaultStyle = graphStyle.toSheet()
-    let relationships = this.relationships
-    let nodes = deduplicateNodes(this.nodes)
-    let selectedItem = ''
-
-    if (nodes.length > parseInt(this.initialNodeDisplay)) {
-      nodes = nodes.slice(0, this.initialNodeDisplay)
-      relationships = this.relationships.filter(item => {
-        return nodes.filter(node => node.id === item.startNodeId) > 0
-      })
-      selectedItem = {
-        type: 'status-item',
-        item: `Not all return nodes are being displayed due to Initial Node Display setting. Only ${this.initialNodeDisplay} of ${nodes.length} nodes are being displayed`
-      }
-    }
-
-    if (this.graphStyleData) {
-      const rebasedStyle = deepmerge(this.defaultStyle, this.graphStyleData)
-      graphStyle.loadRules(rebasedStyle)
-    }
-
-    // set state
-    const data = this.data
-    data.graphStyle = graphStyle
-    data.nodes = nodes
-    data.relationships = relationships
-    data.selectedItem = selectedItem
   },
   watch: {
     graphStyleData: function (graphStyleData, prevGraphStyleData) {
@@ -179,8 +186,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={neoGraphStyle()}
-          onSelectedLabel={this.onSelectedLabel.bind(this)}
-          onSelectedRelType={this.onSelectedRelType.bind(this)}
+          handleSelectedLabel={this.handleSelectedLabel.bind(this)}
+          handleSelectedRelType={this.handleSelectedRelType.bind(this)}
         />
       )
     } else {
@@ -188,8 +195,8 @@ export default {
         <legend-component
           stats={this.stats}
           graphStyle={this.graphStyle}
-          onSelectedLabel={this.onSelectedLabel.bind(this)}
-          onSelectedRelType={this.onSelectedRelType.bind(this)}
+          handleSelectedLabel={this.handleSelectedLabel.bind(this)}
+          handleSelectedRelType={this.handleSelectedRelType.bind(this)}
         />
       )
     }
@@ -208,14 +215,14 @@ export default {
         <graph-component
           fullscreen={this.fullscreen}
           frameHeight={this.frameHeight}
-          relationships={this.relationships}
-          nodes={this.nodes}
+          relationships={this.relationshipsData}
+          nodes={this.nodesData}
           getNodeNeighbours={this.getNodeNeighbours.bind(this)}
-          onItemMouseOver={this.onItemMouseOver.bind(this)}
-          onItemSelect={this.onItemSelect.bind(this)}
+          handleItemMouseOver={this.handleItemMouseOver.bind(this)}
+          handleItemSelect={this.handleItemSelect.bind(this)}
           graphStyle={this.graphStyle}
           styleVersion={this.styleVersion} // cheap way for child to check style updates
-          onGraphModelChange={this.onGraphModelChange.bind(this)}
+          handleGraphModelChange={this.handleGraphModelChange.bind(this)}
           assignVisElement={this.assignVisElement}
           getAutoCompleteCallback={this.getAutoCompleteCallback}
           setGraph={this.setGraph}
@@ -226,7 +233,7 @@ export default {
           hoveredItem={this.hoveredItem}
           selectedItem={this.selectedItem}
           graphStyle={this.graphStyle}
-          onExpandToggled={this.onInspectorExpandToggled.bind(this)}
+          handleExpandToggled={this.handleInspectorExpandToggled.bind(this)}
         />
       </styled-full-size-container>
     )

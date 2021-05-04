@@ -1,7 +1,30 @@
 <script>
-// export component
+import { createGraph, mapRelationships, getGraphStats } from '../mapper'
+import { GraphEventHandler } from '../GraphEventHandler'
+import '../lib/visualization/index'
+import { dim } from '../constants'
+import { StyledZoomHolder, StyledSvgWrapper, StyledZoomButton } from './styled'
+import { ZoomInIcon, ZoomOutIcon } from '../browser/icons/Icons'
+import graphView from '../lib/visualization/components/graphView'
+
 export default {
   name: 'graph-component',
+  props: [
+    'fullscreen',
+    'frameHeight',
+    'relationships',
+    'nodes',
+    'getNodeNeighbours',
+    'handleItemMouseOver',
+    'handleItemSelect',
+    'graphStyle',
+    'styleVersion',
+    'handleGraphModelChange',
+    'assignVisElement',
+    'getAutoCompleteCallback',
+    'setGraph'
+  ],
+  components: { StyledSvgWrapper },
   methods: {
     graphInit(el) {
       this.svgElement = el
@@ -44,14 +67,24 @@ export default {
           this.graph,
           this.graphView,
           this.getNodeNeighbours,
-          this.onItemMouseOver,
-          this.onItemSelect,
-          this.onGraphModelChange
+          this.handleItemMouseOver,
+          this.handleItemSelect,
+          this.handleGraphModelChange
         )
         this.graphEH.bindEventHandlers()
-        this.onGraphModelChange(getGraphStats(this.graph))
+        this.handleGraphModelChange(getGraphStats(this.graph))
         this.graphView.resize()
         this.graphView.update()
+      }
+    },
+    addInternalRelationships(internalRelationships) {
+      if (this.graph) {
+        this.graph.addInternalRelationships(
+          mapRelationships(internalRelationships, this.graph)
+        )
+        this.onGraphModelChange(getGraphStats(this.graph))
+        this.graphView.update()
+        this.graphEH.onItemMouseOut()
       }
     },
     zoomButtons() {
@@ -59,13 +92,13 @@ export default {
         <StyledZoomHolder>
           <StyledZoomButton
             class={this.zoomInLimitReached ? 'faded zoom-in' : 'zoom-in'}
-            onClick={this.zoomInClicked.bind(this)}
+            handleClick={this.zoomInClicked.bind(this)}
           >
             <ZoomInIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>
           <StyledZoomButton
             class={this.zoomOutLimitReached ? 'faded zoom-out' : 'zoom-out'}
-            onClick={this.zoomOutClicked.bind(this)}
+            handleClick={this.zoomOutClicked.bind(this)}
           >
             <ZoomOutIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>
@@ -85,15 +118,22 @@ export default {
   },
   updated() {
     this.graphInit.bind(this)(this.$refs.vueref0)
-    if (prevProps.styleVersion !== this.styleVersion) {
-      this.graphView.update()
-    }
-
-    if (
-      this.fullscreen !== prevProps.fullscreen ||
-      this.frameHeight !== prevProps.frameHeight
-    ) {
-      this.graphView.resize()
+  },
+  watch: {
+    styleVersion: function (styleVersion, prevStyleVersion) {
+      if (prevStyleVersion !== styleVersion) {
+        this.graphView.update()
+      }
+    },
+    fullscreen: function (fullscreen, prevFullscreen) {
+      if (fullscreen !== prevFullscreen) {
+        this.graphView.resize()
+      }
+    },
+    frameHeight: function (frameHeight, prevFrameHeight) {
+      if (frameHeight !== prevFrameHeight) {
+        this.graphView.resize()
+      }
     }
   },
   render() {

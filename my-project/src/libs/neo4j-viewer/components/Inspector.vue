@@ -1,7 +1,77 @@
 <script>
-// export component
+import { deepEquals, optionalToString } from '../services/utils'
+import SVGInline from '../SVGInline'
+import {
+  inspectorFooterContractedHeight,
+  StyledInspectorFooterStatusMessage,
+  StyledTokenContextMenuKey,
+  StyledTokenRelationshipType,
+  StyledLabelToken,
+  StyledStatusBar,
+  StyledStatus,
+  StyledInspectorFooter,
+  StyledInspectorFooterRow,
+  StyledInspectorFooterRowListPair,
+  StyledInspectorFooterRowListKey,
+  StyledInspectorFooterRowListValue,
+  StyledInlineList
+} from './styled'
+import GrassEditor from './GrassEditor'
+import RowExpandToggleComponent from './RowExpandToggle'
+import ClickableUrls from '../browser/ClickableUrls'
+import numberToUSLocale from '../utils/number-to-US-locale'
+
+const mapItemProperties = itemProperties =>
+  itemProperties
+    .sort(({ key: keyA }, { key: keyB }) => (keyA < keyB ? -1 : keyA === keyB ? 0 : 1))
+    .map((prop, i) => (
+      <StyledInspectorFooterRowListPair class="pair" key={'prop' + i}>
+        <StyledInspectorFooterRowListKey class="key">
+          {prop.key + ': '}
+        </StyledInspectorFooterRowListKey>
+        <StyledInspectorFooterRowListValue class="value">
+          <ClickableUrls text={optionalToString(prop.value)} />
+        </StyledInspectorFooterRowListValue>
+      </StyledInspectorFooterRowListPair>
+    ))
+
+const mapLabels = (graphStyle, itemLabels) => {
+  return itemLabels.map((label, i) => {
+    const graphStyleForLabel = graphStyle.forNode({ labels: [label] })
+    const style = {
+      backgroundColor: graphStyleForLabel.get('color'),
+      color: graphStyleForLabel.get('text-color-internal')
+    }
+    return (
+      <StyledLabelToken
+        key={'label' + i}
+        style={style}
+        class={'token' + ' ' + 'token-label'}
+      >
+        {label}
+      </StyledLabelToken>
+    )
+  })
+}
+
 export default {
   name: 'inspector-component',
+  components: {
+    StyledInspectorFooterStatusMessage,
+    StyledTokenContextMenuKey,
+    StyledTokenRelationshipType,
+    StyledLabelToken,
+    StyledStatusBar,
+    StyledStatus,
+    StyledInspectorFooter,
+    StyledInspectorFooterRow,
+    StyledInspectorFooterRowListPair,
+    StyledInspectorFooterRowListKey,
+    StyledInspectorFooterRowListValue,
+    StyledInlineList,
+    RowExpandToggleComponent,
+    GrassEditor
+  },
   data() {
     return { contracted: true, graphStyle: this.graphStyle }
   },
@@ -15,18 +85,20 @@ export default {
       this.contracted = !this.contracted
       this.$nextTick(() => {
         const inspectorHeight = this.footerRowElem.clientHeight
-        this.onExpandToggled &&
-          this.onExpandToggled(this.contracted, this.contracted ? 0 : inspectorHeight)
+        this.handleExpandToggled &&
+          this.handleExpandToggled(this.contracted, this.contracted ? 0 : inspectorHeight)
       })
     }
   },
   mounted() {
     this.setFooterRowELem.bind(this)(this.$refs.vueref1)
   },
-  updated() {
-    if (!deepEquals(this.selectedItem, prevProps.selectedItem)) {
-      this.contracted = true
-      this.onExpandToggled && this.onExpandToggled(true, 0)
+  watch: {
+    selectedItem: function (selectedItem, prevSelectedItem) {
+      if (!deepEquals(selectedItem, prevSelectedItem)) {
+        this.contracted = true
+        this.handleExpandToggled && this.handleExpandToggled(true, 0)
+      }
     }
   },
   render() {
@@ -89,9 +161,9 @@ export default {
             <styled-inspector-footer-row-list-pair class="pair" key="pair">
               <styled-inspector-footer-row-list-value class="value">
                 {this.hasTruncatedFields && (
-                  <styled-truncated-message>
-                    <icon name="warning sign" /> Record fields have been truncated.&nbsp;
-                  </styled-truncated-message>
+                  <span style="color: orange">
+                    Warning: Record fields have been truncated.&nbsp;
+                  </span>
                 )}
                 {description}
               </styled-inspector-footer-row-list-value>
@@ -157,7 +229,7 @@ export default {
                   contracted={this.contracted}
                   rowElem={this.footerRowElem}
                   containerHeight={inspectorFooterContractedHeight}
-                  onClick={this.toggleExpand.bind(this)}
+                  handleClick={this.toggleExpand.bind(this)}
                 />
               )}
               {inspectorContent}

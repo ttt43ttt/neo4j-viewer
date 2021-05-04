@@ -1,7 +1,32 @@
 <script>
-// export component
+import {
+  legendRowHeight,
+  StyledLegendRow,
+  StyledTokenRelationshipType,
+  StyledLegendInlineListItem,
+  StyledLegend,
+  StyledLegendContents,
+  StyledLabelToken,
+  StyledTokenCount,
+  StyledLegendInlineList
+} from './styled'
+import RowExpandToggleComponent from './RowExpandToggle'
+import numberToUSLocale from '../utils/number-to-US-locale'
+
 export default {
   name: 'legend-component',
+  props: ['stats'],
+  components: {
+    StyledLegendRow,
+    StyledTokenRelationshipType,
+    StyledLegendInlineListItem,
+    StyledLegend,
+    StyledLegendContents,
+    StyledLabelToken,
+    StyledTokenCount,
+    StyledLegendInlineList,
+    RowExpandToggleComponent
+  },
   data() {
     return { typeRowContracted: true, labelRowContracted: true }
   },
@@ -36,8 +61,8 @@ export default {
           labels: [legendItemKey]
         })
 
-        const onClick = () => {
-          this.onSelectedLabel(
+        const handleClick = () => {
+          this.handleSelectedLabel(
             legendItemKey,
             Object.keys(labels[legendItemKey].properties)
           )
@@ -51,7 +76,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-labels">
             <styled-legend-contents class="contents">
               <styled-label-token
-                onClick={onClick}
+                handleClick={handleClick}
                 style={style}
                 class="token token-label"
               >
@@ -71,7 +96,7 @@ export default {
               contracted={this.labelRowContracted}
               rowElem={this.labelRowELem}
               containerHeight={legendRowHeight}
-              onClick={() => {
+              handleClick={() => {
                 this.setState({
                   labelRowContracted: !this.labelRowContracted
                 })
@@ -93,8 +118,8 @@ export default {
           type: legendItemKey
         })
 
-        const onClick = () => {
-          this.onSelectedRelType(
+        const handleClick = () => {
+          this.handleSelectedRelType(
             legendItemKey,
             Object.keys(legendItems[legendItemKey].properties)
           )
@@ -108,7 +133,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-reltypes">
             <styled-legend-contents class="contents">
               <styled-token-relationship-type
-                onClick={onClick}
+                handleClick={handleClick}
                 style={style}
                 class="token token-relationship-type"
               >
@@ -128,7 +153,7 @@ export default {
               contracted={this.typeRowContracted}
               rowElem={this.typeRowElem}
               containerHeight={legendRowHeight}
-              onClick={() => {
+              handleClick={() => {
                 this.setState({
                   typeRowContracted: !this.typeRowContracted
                 })
