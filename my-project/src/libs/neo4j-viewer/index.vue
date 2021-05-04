@@ -1,10 +1,12 @@
 <script>
+import { ThemeProvider } from 'vue-styled-components'
+import * as themes from './styles/themes'
 import ExplorerComponent from './components/Explorer'
 import { getData } from '@/api/kg-browser'
 
 export default {
   name: 'neo4j-viewer',
-  components: { ExplorerComponent },
+  components: { ExplorerComponent, ThemeProvider },
   data() {
     return {
       maxNeighbours: 100,
@@ -50,29 +52,35 @@ export default {
       return null
     }
     return (
-      <div style={{ height: this.frameHeight + 'px' }}>
-        <ExplorerComponent
-          maxNeighbours={this.maxNeighbours}
-          hasTruncatedFields={this.hasTruncatedFields}
-          initialNodeDisplay={this.initialNodeDisplay}
-          graphStyleData={this.graphStyleData}
-          updateStyle={this.updateStyle}
-          getNeighbours={this.getNeighbours.bind(this)}
-          nodes={this.nodes}
-          relationships={this.relationships}
-          fullscreen={this.fullscreen}
-          frameHeight={this.frameHeight}
-          assignVisElement={this.assignVisElement}
-          getAutoCompleteCallback={callback => {
-            this.autoCompleteCallback = callback
-          }}
-          setGraph={this.setGraph.bind(this)}
-        />
-      </div>
+      <ThemeProvider theme={themes.normal}>
+        <div style={{ height: this.frameHeight + 'px' }}>
+          <ExplorerComponent
+            maxNeighbours={this.maxNeighbours}
+            hasTruncatedFields={this.hasTruncatedFields}
+            initialNodeDisplay={this.initialNodeDisplay}
+            graphStyleData={this.graphStyleData}
+            updateStyle={this.updateStyle}
+            getNeighbours={this.getNeighbours.bind(this)}
+            nodes={this.nodes}
+            relationships={this.relationships}
+            fullscreen={this.fullscreen}
+            frameHeight={this.frameHeight}
+            assignVisElement={this.assignVisElement}
+            getAutoCompleteCallback={callback => {
+              this.autoCompleteCallback = callback
+            }}
+            setGraph={this.setGraph.bind(this)}
+          />
+        </div>
+      </ThemeProvider>
     )
   }
 }
 </script>
 
 <style scoped>
+/deep/ * {
+  padding: 0;
+  margin: 0;
+}
 </style>
