@@ -79,8 +79,4 @@ export default {
 </script>
 
 <style scoped>
-/deep/ * {
-  padding: 0;
-  margin: 0;
-}
 </style>
