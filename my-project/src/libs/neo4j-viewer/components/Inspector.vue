@@ -56,6 +56,14 @@ const mapLabels = (graphStyle, itemLabels) => {
 
 export default {
   name: 'inspector-component',
+  props: [
+    'hasTruncatedFields',
+    'fullscreen',
+    'hoveredItem',
+    'selectedItem',
+    'graphStyle',
+    'handleExpandToggled'
+  ],
   components: {
     StyledInspectorFooterStatusMessage,
     StyledTokenContextMenuKey,
@@ -73,7 +81,7 @@ export default {
     GrassEditor
   },
   data() {
-    return { contracted: true, graphStyle: this.graphStyle }
+    return { contracted: true, graphStyleData: this.graphStyle }
   },
   methods: {
     toggleExpand() {
@@ -166,7 +174,7 @@ export default {
       } else if (type === 'node') {
         inspectorContent = (
           <styled-inline-list class="list-inline">
-            {mapLabels(this.graphStyle, item.labels)}
+            {mapLabels(this.graphStyleData, item.labels)}
             <styled-inspector-footer-row-list-pair key="pair" class="pair">
               <styled-inspector-footer-row-list-key class="key">
                 {'<id>:'}
@@ -180,8 +188,8 @@ export default {
         )
       } else if (type === 'relationship') {
         const style = {
-          backgroundColor: this.graphStyle.forRelationship(item).get('color'),
-          color: this.graphStyle.forRelationship(item).get('text-color-internal')
+          backgroundColor: this.graphStyleData.forRelationship(item).get('color'),
+          color: this.graphStyleData.forRelationship(item).get('text-color-internal')
         }
         inspectorContent = (
           <styled-inline-list class="list-inline">
