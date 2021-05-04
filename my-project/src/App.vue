@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <Browser/>
+    <!-- <HelloWorld /> -->
+    <Browser />
   </div>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld'
 import Browser from './components/kg-browser'
 
 export default {
   name: 'App',
   components: {
+    HelloWorld,
     Browser
   }
 }

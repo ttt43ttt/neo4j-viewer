@@ -109,7 +109,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-reltypes">
             <styled-legend-contents class="contents">
               <styled-token-relationship-type
-                handleClick={handleClick}
+                onClick={handleClick}
                 style={style}
                 class="token token-relationship-type"
               >

@@ -5,6 +5,7 @@ const getHeightFromElem = rowElem => rowElem && (rowElem ? rowElem.clientHeight 
 
 export default {
   name: 'row-expand-toggle-component',
+  props: ['contracted', 'rowElem', 'containerHeight', 'handleClick'],
   components: {
     StyledRowToggle,
     StyledCaret
@@ -31,7 +32,7 @@ export default {
   render() {
     if (this.containerHeight * 1.1 < this.rowHeight) {
       return (
-        <styled-row-toggle handleClick={this.handleClick}>
+        <styled-row-toggle onClick={this.handleClick}>
           <styled-caret
             class={this.contracted ? 'fa fa-caret-left' : 'fa fa-caret-down'}
           />

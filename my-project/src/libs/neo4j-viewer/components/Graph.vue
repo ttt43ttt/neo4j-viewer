@@ -89,13 +89,13 @@ export default {
         <StyledZoomHolder>
           <StyledZoomButton
             class={this.zoomInLimitReached ? 'faded zoom-in' : 'zoom-in'}
-            handleClick={this.zoomInClicked.bind(this)}
+            onClick={this.zoomInClicked.bind(this)}
           >
             <ZoomInIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>
           <StyledZoomButton
             class={this.zoomOutLimitReached ? 'faded zoom-out' : 'zoom-out'}
-            handleClick={this.zoomOutClicked.bind(this)}
+            onClick={this.zoomOutClicked.bind(this)}
           >
             <ZoomOutIcon regulateSize={this.fullscreen ? 2 : 1} />
           </StyledZoomButton>

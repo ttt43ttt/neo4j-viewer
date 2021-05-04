@@ -1,13 +1,31 @@
 <script>
+const ChildComponent = {
+  name: 'ChildComponent',
+  render() {
+    return <div onClick={this.$listeners.click}>Child Component</div>
+  }
+}
+
 export default {
   name: 'HelloWorld',
+  components: { ChildComponent },
   data() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  methods: {
+    doSomething() {
+      console.log(`HelloWorld is clicked`)
+    }
+  },
   render() {
-    return <div>hello world</div>
+    return (
+      <div>
+        hello world
+        <ChildComponent onClick={this.doSomething} />
+      </div>
+    )
   }
 }
 </script>

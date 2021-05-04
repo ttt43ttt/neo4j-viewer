@@ -61,7 +61,7 @@ export default {
             <StyledCircleSelector
               class={active ? 'active' : ''}
               style={style}
-              handleClick={handleClick}
+              onClick={handleClick}
             >
               {text}
             </StyledCircleSelector>
@@ -129,7 +129,7 @@ export default {
             <StyledPickerSelector
               class={active ? 'active' : ''}
               style={style}
-              handleClick={handleClick}
+              onClick={handleClick}
             />
           </StyledPickerListItem>
         )
@@ -178,7 +178,7 @@ export default {
           <StyledPickerListItem key={toKeyString('caption' + displayCaption)}>
             <StyledCaptionSelector
               class={active ? 'active' : ''}
-              handleClick={handleClick}
+              onClick={handleClick}
             >
               {displayCaption}
             </StyledCaptionSelector>

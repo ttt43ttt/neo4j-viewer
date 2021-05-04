@@ -22,9 +22,13 @@ export default {
       console.log(`updateStyle`)
       console.log(arguments)
     },
-    getNeighbours() {
+    getNeighbours(id, currentNeighbourIds = []) {
       console.log(`getNeighbours`)
       console.log(arguments)
+      return new Promise((resolve, reject) => {
+        // TODO: get neighbours
+        resolve({ nodes: this.nodes, relationships: this.relationships })
+      })
     },
     assignVisElement() {
       console.log(`assignVisElement`)
@@ -46,23 +50,25 @@ export default {
       return null
     }
     return (
-      <ExplorerComponent
-        maxNeighbours={this.maxNeighbours}
-        hasTruncatedFields={this.hasTruncatedFields}
-        initialNodeDisplay={this.initialNodeDisplay}
-        graphStyleData={this.graphStyleData}
-        updateStyle={this.updateStyle}
-        getNeighbours={this.getNeighbours.bind(this)}
-        nodes={this.nodes}
-        relationships={this.relationships}
-        fullscreen={this.fullscreen}
-        frameHeight={this.frameHeight}
-        assignVisElement={this.assignVisElement}
-        getAutoCompleteCallback={callback => {
-          this.autoCompleteCallback = callback
-        }}
-        setGraph={this.setGraph.bind(this)}
-      />
+      <div style={{ height: this.frameHeight + 'px' }}>
+        <ExplorerComponent
+          maxNeighbours={this.maxNeighbours}
+          hasTruncatedFields={this.hasTruncatedFields}
+          initialNodeDisplay={this.initialNodeDisplay}
+          graphStyleData={this.graphStyleData}
+          updateStyle={this.updateStyle}
+          getNeighbours={this.getNeighbours.bind(this)}
+          nodes={this.nodes}
+          relationships={this.relationships}
+          fullscreen={this.fullscreen}
+          frameHeight={this.frameHeight}
+          assignVisElement={this.assignVisElement}
+          getAutoCompleteCallback={callback => {
+            this.autoCompleteCallback = callback
+          }}
+          setGraph={this.setGraph.bind(this)}
+        />
+      </div>
     )
   }
 }
