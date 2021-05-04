@@ -30,30 +30,10 @@ export default {
   data() {
     return { typeRowContracted: true, labelRowContracted: true }
   },
-  methods: {
-    setTypeRowELem(elem) {
-      if (elem) {
-        this.typeRowElem = elem
-      }
-    },
-    setLabelRowELem(elem) {
-      if (elem) {
-        this.labelRowELem = elem
-      }
-    }
-  },
-  created() {
-    this.typeRowElem = null
-    this.labelRowELem = null
-  },
-  mounted() {
-    this.setTypeRowELem.bind(this)(this.$refs.vueref3)
-    this.setLabelRowELem.bind(this)(this.$refs.vueref2)
-  },
-  updated() {
-    this.setTypeRowELem.bind(this)(this.$refs.vueref3)
-    this.setLabelRowELem.bind(this)(this.$refs.vueref2)
-  },
+  methods: {},
+  created() {},
+  mounted() {},
+  updated() {},
   render() {
     const mapLabels = labels => {
       const labelList = Object.keys(labels).map((legendItemKey, i) => {
@@ -91,10 +71,10 @@ export default {
       })
       return (
         <styled-legend-row class={this.labelRowContracted ? 'contracted' : ''}>
-          <styled-legend-inline-list class="list-inline" ref="vueref2">
+          <styled-legend-inline-list class="list-inline" ref="labelRowElem">
             <row-expand-toggle-component
               contracted={this.labelRowContracted}
-              rowElem={this.labelRowELem}
+              rowElem={this.$refs.labelRowElem}
               containerHeight={legendRowHeight}
               handleClick={() => (this.labelRowContracted = !this.labelRowContracted)}
             />
@@ -144,10 +124,10 @@ export default {
       })
       return (
         <styled-legend-row class={this.typeRowContracted ? 'contracted' : ''}>
-          <styled-legend-inline-list class="list-inline" ref="vueref3">
+          <styled-legend-inline-list class="list-inline" ref="typeRowElem">
             <row-expand-toggle-component
               contracted={this.typeRowContracted}
-              rowElem={this.typeRowElem}
+              rowElem={this.$refs.typeRowElem}
               containerHeight={legendRowHeight}
               handleClick={() => (this.typeRowContracted = !this.typeRowContracted)}
             />

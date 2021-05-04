@@ -76,23 +76,16 @@ export default {
     return { contracted: true, graphStyle: this.graphStyle }
   },
   methods: {
-    setFooterRowELem(elem) {
-      if (elem) {
-        this.footerRowElem = elem
-      }
-    },
     toggleExpand() {
       this.contracted = !this.contracted
       this.$nextTick(() => {
-        const inspectorHeight = this.footerRowElem.clientHeight
+        const inspectorHeight = this.$refs.footerRowElem.clientHeight
         this.handleExpandToggled &&
           this.handleExpandToggled(this.contracted, this.contracted ? 0 : inspectorHeight)
       })
     }
   },
-  mounted() {
-    this.setFooterRowELem.bind(this)(this.$refs.vueref1)
-  },
+  mounted() {},
   watch: {
     selectedItem: function (selectedItem, prevSelectedItem) {
       if (!deepEquals(selectedItem, prevSelectedItem)) {
@@ -222,12 +215,12 @@ export default {
             <styled-inspector-footer-row
               data-testid="vizInspector"
               class="inspector-footer-row"
-              ref="vueref1"
+              ref="footerRowElem"
             >
               {type === 'canvas' ? null : (
                 <row-expand-toggle-component
                   contracted={this.contracted}
-                  rowElem={this.footerRowElem}
+                  rowElem={this.$refs.footerRowElem}
                   containerHeight={inspectorFooterContractedHeight}
                   handleClick={this.toggleExpand.bind(this)}
                 />

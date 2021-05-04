@@ -26,9 +26,6 @@ export default {
   ],
   components: { StyledSvgWrapper },
   methods: {
-    graphInit(el) {
-      this.svgElement = el
-    },
     zoomInClicked(el) {
       const limits = this.graphView.zoomIn(el)
       this.zoomInLimitReached = limits.zoomInLimit
@@ -43,7 +40,7 @@ export default {
       return this.frameHeight && this.fullscreen
         ? this.frameHeight - (dim.frameStatusbarHeight + dim.frameTitlebarHeight * 2)
         : this.frameHeight - dim.frameStatusbarHeight ||
-            this.svgElement.parentNode.offsetHeight
+            this.$refs.svgElement.parentNode.offsetHeight
     },
     initGraphView() {
       if (!this.graphView) {
@@ -51,14 +48,14 @@ export default {
 
         const measureSize = () => {
           return {
-            width: this.svgElement.offsetWidth,
+            width: this.$refs.svgElement.offsetWidth,
             height: this.getVisualAreaHeight()
           }
         }
 
         this.graph = createGraph(this.nodes, this.relationships)
         this.graphView = new NeoConstructor(
-          this.svgElement,
+          this.$refs.svgElement,
           measureSize,
           this.graph,
           this.graphStyle
@@ -107,18 +104,16 @@ export default {
     }
   },
   mounted() {
-    this.graphInit.bind(this)(this.$refs.vueref0)
-    if (this.svgElement != null) {
+    if (this.$refs.svgElement != null) {
       this.initGraphView()
       this.graph && this.setGraph && this.setGraph(this.graph)
       this.getAutoCompleteCallback &&
         this.getAutoCompleteCallback(this.addInternalRelationships)
-      this.assignVisElement && this.assignVisElement(this.svgElement, this.graphView)
+      this.assignVisElement &&
+        this.assignVisElement(this.$refs.svgElement, this.graphView)
     }
   },
-  updated() {
-    this.graphInit.bind(this)(this.$refs.vueref0)
-  },
+  updated() {},
   watch: {
     styleVersion: function (styleVersion, prevStyleVersion) {
       if (prevStyleVersion !== styleVersion) {
@@ -139,7 +134,7 @@ export default {
   render() {
     return (
       <styled-svg-wrapper>
-        <svg class="neod3viz" ref="vueref0" />
+        <svg class="neod3viz" ref="svgElement" />
         {this.zoomButtons()}
       </styled-svg-wrapper>
     )
