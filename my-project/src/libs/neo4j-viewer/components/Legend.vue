@@ -41,7 +41,7 @@ export default {
           labels: [legendItemKey]
         })
 
-        const handleClick = () => {
+        const onClick = () => {
           this.handleSelectedLabel(
             legendItemKey,
             Object.keys(labels[legendItemKey].properties)
@@ -56,7 +56,7 @@ export default {
           <styled-legend-inline-list-item key={i} data-testid="viz-legend-labels">
             <styled-legend-contents class="contents">
               <styled-label-token
-                handleClick={handleClick}
+                onClick={onClick}
                 style={style}
                 class="token token-label"
               >

@@ -76,7 +76,8 @@ export default {
       relationshipsData: relationships,
       selectedItem: selectedItem,
       labels: {},
-      relTypes: {}
+      relTypes: {},
+      freezeLegend: false
     }
   },
   methods: {
