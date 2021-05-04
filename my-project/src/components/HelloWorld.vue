@@ -6,6 +6,20 @@ const ChildComponent = {
   }
 }
 
+// lower-case started function needs the "h" parameter
+const functionReturnJsx2 = (h, a1, a2, a3) => {
+  return (
+    <div>
+      functionReturnJsx2: {a1} {a2} {a3}
+    </div>
+  )
+}
+
+// Upper-case started function is compiled to VUE functional component
+const JsxComponent = ({ props }) => {
+  return <div>JSX component: {props.prop1}</div>
+}
+
 export default {
   name: 'HelloWorld',
   components: { ChildComponent },
@@ -19,11 +33,22 @@ export default {
       console.log(`HelloWorld is clicked`)
     }
   },
-  render() {
+  render(h) {
+    // function inside the render does not need the "h" parameter
+    const functionReturnJsx1 = (a1, a2, a3) => {
+      return (
+        <div>
+          functionReturnJsx1: {a1} {a2} {a3}
+        </div>
+      )
+    }
     return (
       <div>
         hello world
         <ChildComponent onClick={this.doSomething} />
+        <JsxComponent prop1="abc" />
+        {functionReturnJsx1('a', 'b', 'c')}
+        {functionReturnJsx2(h, 'a', 'b', 'c')}
       </div>
     )
   }

@@ -21,7 +21,7 @@ import RowExpandToggleComponent from './RowExpandToggle'
 import ClickableUrls from '../ClickableUrls'
 import numberToUSLocale from '../utils/number-to-US-locale'
 
-const mapItemProperties = itemProperties =>
+const mapItemProperties = (h, itemProperties) =>
   itemProperties
     .sort(({ key: keyA }, { key: keyB }) => (keyA < keyB ? -1 : keyA === keyB ? 0 : 1))
     .map((prop, i) => (
@@ -35,7 +35,7 @@ const mapItemProperties = itemProperties =>
       </StyledInspectorFooterRowListPair>
     ))
 
-const mapLabels = (graphStyle, itemLabels) => {
+const mapLabels = (h, graphStyle, itemLabels) => {
   return itemLabels.map((label, i) => {
     const graphStyleForLabel = graphStyle.forNode({ labels: [label] })
     const style = {
@@ -102,7 +102,7 @@ export default {
       }
     }
   },
-  render() {
+  render(h) {
     let item
     let type
     let inspectorContent
@@ -174,7 +174,7 @@ export default {
       } else if (type === 'node') {
         inspectorContent = (
           <styled-inline-list class="list-inline">
-            {mapLabels(this.graphStyleData, item.labels)}
+            {mapLabels(h, this.graphStyleData, item.labels)}
             <styled-inspector-footer-row-list-pair key="pair" class="pair">
               <styled-inspector-footer-row-list-key class="key">
                 {'<id>:'}
@@ -183,7 +183,7 @@ export default {
                 {item.id}
               </styled-inspector-footer-row-list-value>
             </styled-inspector-footer-row-list-pair>
-            {mapItemProperties(item.properties)}
+            {mapItemProperties(h, item.properties)}
           </styled-inline-list>
         )
       } else if (type === 'relationship') {
@@ -208,7 +208,7 @@ export default {
                 {item.id}
               </styled-inspector-footer-row-list-value>
             </styled-inspector-footer-row-list-pair>
-            {mapItemProperties(item.properties)}
+            {mapItemProperties(h, item.properties)}
           </styled-inline-list>
         )
       }
