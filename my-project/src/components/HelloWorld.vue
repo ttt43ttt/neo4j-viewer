@@ -22,6 +22,7 @@ const JsxComponent = ({ props }) => {
 
 export default {
   name: 'HelloWorld',
+  props: ['name'],
   components: { ChildComponent },
   data() {
     return {
@@ -36,9 +37,11 @@ export default {
   render(h) {
     // function inside the render does not need the "h" parameter
     const functionReturnJsx1 = (a1, a2, a3) => {
+      const jsxList = [1, 2, 3].map(x => <span>{x}</span>)
       return (
         <div>
-          functionReturnJsx1: {a1} {a2} {a3}
+          functionReturnJsx1: {this.name}, {this.msg}
+          <div>functionReturnJsx1: {jsxList}</div>
         </div>
       )
     }
