@@ -13,14 +13,14 @@ export default {
         {definedText.split(URL_REGEX).map((text, index) => {
           /* since we never move these components this key should be fine */
           return (
-            <React.Fragment key={index}>
+            <span key={index}>
               {text}
               {urls[index] && (
                 <a href={urls[index]} target="_blank" rel="noreferrer">
                   {urls[index]}
                 </a>
               )}
-            </React.Fragment>
+            </span>
           )
         })}
       </WrappingTag>
