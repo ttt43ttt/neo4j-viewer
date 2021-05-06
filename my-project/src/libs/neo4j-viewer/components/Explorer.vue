@@ -210,7 +210,6 @@ export default {
         class={Object.keys(this.stats.relTypes).length ? '' : 'one-legend-row'}
         forcePaddingBottom={inspectingItemType ? this.forcePaddingBottom : null}
       >
-        {legend}
         <graph-component
           fullscreen={this.fullscreen}
           frameHeight={this.frameHeight}
